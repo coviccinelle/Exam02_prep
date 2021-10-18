@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+
 #define $NOT_FOUND -1
 #define $ENDL '\n'
 #define $ZERO '\0'
