@@ -6,7 +6,7 @@
 /*   By: thi-phng <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 12:45:27 by thi-phng          #+#    #+#             */
-/*   Updated: 2021/10/19 15:15:01 by thi-phng         ###   ########.fr       */
+/*   Updated: 2021/10/19 15:22:50 by thi-phng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,18 @@ typedef struct	s_type
 
 int	put_nbr(long int n)
 {
-	int		ret;
 	char	c;
 
 	if (n < 0)
 	{
 		n = -n;
-		ret += write(1, "-", 1);
+		write(1, "-", 1);
 	}
 	if (n / 10)
-		ret += put_nbr(n / 10);
+		put_nbr(n / 10);
 	c = n % 10 + '0';
-	ret += write(1, &c, 1);
-	return (ret);
+	write(1, &c, 1);
+	return (0);
 }
 
 int	size_d(long int n)
@@ -57,17 +56,15 @@ int	size_d(long int n)
 
 int	put_x(unsigned int x)
 {
-	int		ret;
 	char	c;
 	char	*str;
 
-	ret = 0;
 	str = "0123456789abcdef";
 	if (x / 16)
-		ret += put_x(x / 16);
+		put_x(x / 16);
 	c = str[(x % 16)];
-	ret += write(1, &c, 1);
-	return (ret);
+	write(1, &c, 1);
+	return (0);
 }
 
 int	size_x(unsigned int x)
