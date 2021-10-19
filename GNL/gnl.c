@@ -84,6 +84,7 @@ char	*return_value(char **overflow)
 	char	*tmp;
 	const	int	pos = strclen(*overflow, $ENDL);
 
+	line = NULL;
 	if (pos != $NOT_FOUND)
 	{
 		line = ft_strndup(*overflow, pos + 1);

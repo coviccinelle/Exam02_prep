@@ -6,7 +6,7 @@
 /*   By: thi-phng <thi-phng@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 16:50:15 by thi-phng          #+#    #+#             */
-/*   Updated: 2021/10/18 10:44:44 by thi-phng         ###   ########.fr       */
+/*   Updated: 2021/10/19 15:08:59 by thi-phng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int     ft_printf(const char    *str, ...)
     }
     return (rett);
 }
-
+/*
 int main ()
 {
     int a = 42;
@@ -173,4 +173,17 @@ int main ()
     printf("%d hahaa %s lolololol %x\n", a, str, c);
     ft_printf("%d hahaa %s lolololol %x\n", a, str, c);
     return (0);
+}*/
+
+int	main()
+{
+	int		n = 376283;
+	char *s = "hello coucou";
+	unsigned int x = 43;
+
+	printf("%d\n", ft_printf("Tho oi %s cac em %d tuoi, and %x\n", s, n, x));
+	printf("%d\n", printf("Tho oi %s cac em %d tuoi, and %x\n", s, n, x));
+	ft_printf("Tho oi %s cac em %d tuoi, and %x\n", s, n, x);
+	printf("Tho oi %s cac em %d tuoi, and %x\n", s, n, x);
+	return (0);
 }
