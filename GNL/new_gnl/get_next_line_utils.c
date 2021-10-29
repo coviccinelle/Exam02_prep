@@ -6,7 +6,7 @@
 /*   By: thi-phng <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 12:53:32 by thi-phng          #+#    #+#             */
-/*   Updated: 2021/10/25 14:52:43 by thi-phng         ###   ########.fr       */
+/*   Updated: 2021/10/29 14:57:42 by thi-phng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*ft_strjoin(char *s1, char *s2)
 			return (NULL);
 		s1[0] = '\0';
 	}
-	if (!s2)
-		return (NULL);
+//	if (!s2)
+//		return (NULL);
 	ret = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!ret)
 		return (NULL);
