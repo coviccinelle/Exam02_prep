@@ -1,84 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_after_exam.c                                   :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thi-phng <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 18:33:39 by thi-phng          #+#    #+#             */
-/*   Updated: 2021/10/30 14:52:18 by thi-phng         ###   ########.fr       */
+/*   Created: 2021/10/25 12:52:45 by thi-phng          #+#    #+#             */
+/*   Updated: 2021/10/30 10:36:46 by thi-phng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-
-
-int	ft_strlen(char *str)
-{
-	int	i = 0;
-
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strchr(char *str, char c)
-{
-	int	i = 0;
-
-	if (!str)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (&str[i]);
-		i++;
-	}
-	return (NULL);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i = 0;
-	int		j = 0;
-	char	*ret;
-
-	if (!s1)
-	{
-		s1 = malloc(1);
-		if (!s1)
-			return (NULL);
-		s1[0] = '\0';
-	}
-	if (!s2)
-		return (NULL);
-	ret = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!ret)
-		return (NULL);
-	while (s1[i])
-	{
-		ret[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		ret[i + j] = s2[j];
-		j++;
-	}
-	ret[i + j] = '\0';
-	free (s1);
-	return (ret);
-}
+#include "get_next_line.h"
 
 
 char	*ft_read(int fd, char *stat)
 {
-	int			ret = 1;
-	char		buf[BUFFER_SIZE + 1];
-
+	int		ret = 1;
+	char	buf[BUFFER_SIZE + 1];
 	while (ret != 0 && !ft_strchr(stat, '\n'))
 	{
 		ret = read(fd, buf, BUFFER_SIZE);
@@ -89,12 +27,10 @@ char	*ft_read(int fd, char *stat)
 	}
 	return (stat);
 }
-
 char	*get_line(char *stat)
 {
 	char	*ret;
-	int		i = 0;
-
+	size_t	i = 0;
 	if (!stat[0])
 		return (NULL);
 	ret = malloc(ft_strlen(stat) + 2);
@@ -113,19 +49,16 @@ char	*get_line(char *stat)
 	ret[i] = '\0';
 	return (ret);
 }
-
 char	*ft_stat(char *stat)
 {
-	int		i = 0;
-	int		e = 0;
+	size_t	i = 0, e = 0;
 	char	*ret;
-
 	while (stat[i] && stat[i] != '\n')
 		i++;
 	if (!stat[i])
 	{
 		free(stat);
-		return(NULL);
+		return (NULL);
 	}
 	ret = malloc(ft_strlen(stat) - i + 1);
 	if (!ret)
@@ -141,15 +74,11 @@ char	*ft_stat(char *stat)
 	free(stat);
 	return (ret);
 }
-
-
-
 char	*get_next_line(int fd)
 {
-	char			*line;
-	static char		*stat;
-
-	if (fd < 0 || BUFFER_SIZE < 1)
+	char		*line;
+	static char	*stat;
+	if (BUFFER_SIZE < 1 || fd < 0)
 		return (NULL);
 	stat = ft_read(fd, stat);
 	if (!stat)
@@ -159,22 +88,24 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(int ac, char **av)
+
+/*
+ int	main(int ac, char **av)
 {
-	char	*line;
 	int		fd;
+	char	*line;
 
 	if (ac != 2)
 	{
-		printf("ac!\n");
+		printf("ac !\n");
 		exit (0);
 	}
 	fd = open(av[1], O_RDONLY);
 	while ((line = get_next_line(fd)))
 	{
-		printf("%s", line);
+		printf("%s\n", line);
 		free(line);
 	}
 	return (0);
 }
-
+*/

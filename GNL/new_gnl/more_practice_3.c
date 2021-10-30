@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_after_exam.c                                   :+:      :+:    :+:   */
+/*   more_practice_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thi-phng <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 18:33:39 by thi-phng          #+#    #+#             */
-/*   Updated: 2021/10/30 14:52:18 by thi-phng         ###   ########.fr       */
+/*   Created: 2021/10/30 10:56:28 by thi-phng          #+#    #+#             */
+/*   Updated: 2021/10/30 14:52:39 by thi-phng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 
 
 int	ft_strlen(char *str)
 {
-	int	i = 0;
+	int	 i = 0;
 
 	while (str[i])
 		i++;
@@ -76,19 +76,21 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*ft_read(int fd, char *stat)
 {
-	int			ret = 1;
-	char		buf[BUFFER_SIZE + 1];
+	int		ret = 1;
+	char	buf[BUFFER_SIZE + 1];
 
 	while (ret != 0 && !ft_strchr(stat, '\n'))
 	{
 		ret = read(fd, buf, BUFFER_SIZE);
 		if (ret == -1)
-			return (NULL);
+			return(NULL);
 		buf[ret] = '\0';
 		stat = ft_strjoin(stat, buf);
 	}
 	return (stat);
 }
+
+
 
 char	*get_line(char *stat)
 {
@@ -114,18 +116,19 @@ char	*get_line(char *stat)
 	return (ret);
 }
 
+
 char	*ft_stat(char *stat)
 {
-	int		i = 0;
-	int		e = 0;
-	char	*ret;
+	char		*ret;
+	int			i = 0;
+	int			e = 0;
 
 	while (stat[i] && stat[i] != '\n')
 		i++;
 	if (!stat[i])
 	{
 		free(stat);
-		return(NULL);
+		return (NULL);
 	}
 	ret = malloc(ft_strlen(stat) - i + 1);
 	if (!ret)
@@ -142,8 +145,6 @@ char	*ft_stat(char *stat)
 	return (ret);
 }
 
-
-
 char	*get_next_line(int fd)
 {
 	char			*line;
@@ -159,10 +160,12 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(int ac, char **av)
+
+
+int		main(int ac, char **av)
 {
-	char	*line;
-	int		fd;
+	char		*line;
+	int			fd;
 
 	if (ac != 2)
 	{
@@ -177,4 +180,3 @@ int	main(int ac, char **av)
 	}
 	return (0);
 }
-
