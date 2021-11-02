@@ -6,7 +6,7 @@
 /*   By: thi-phng <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 12:23:54 by thi-phng          #+#    #+#             */
-/*   Updated: 2021/10/29 12:20:42 by thi-phng         ###   ########.fr       */
+/*   Updated: 2021/11/02 12:49:42 by thi-phng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_print_s(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		write(1, &s[i], 1);
 		i++;
@@ -44,33 +44,37 @@ int	ft_print_s(char *s)
 	return (i);
 }
 
-void	put_d(long int n)
+void	put_d(int n)
 {
-	char	*base;
+	long int	l;
+	char		c;
 
-	base = "0123456789";
-	if (n < 0)
+	l = n;
+	if (l < 0)
 	{
 		write(1, "-", 1);
-		n = -n;
+		l = -l;
 	}
-	if (n >= 10)
-		put_d(n / 10);
-	write(1, &base[(n % 10)], 1);
+	if (l >= 10)
+		put_d((int)l / 10);
+	c = (l % 10) + '0';
+	write(1, &c , 1);
 }
 
 int	size_d(int d)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
+	printf("\n  Test bonne taille de %d" ,d);
 	if (d < 0)
 		i++;
-	while (d)
+	while (d / 10)
 	{
 		d /= 10;
 		i++;
 	}
+	printf(": %d\n  " , i);
 	return (i);
 }
 
@@ -96,9 +100,13 @@ int	size_x(unsigned int x)
 	int	i;
 
 	i = 1;
-	while (x)
+	printf("\n  Test bonne taille de %d : " , x);
+	while (x / 16)
+	{
 		x /= 16;
-	i++;
+		i++;
+	}
+	printf("%d\n " , i);
 	return (i);
 }
 
@@ -158,9 +166,9 @@ int	ft_printf(const char *s, ...)
 
 int	main()
 {
-	int		n = 376283;
+	int		n = 0;
 	char *s = "hello coucou";
-	unsigned int x = 43;
+	unsigned int x = 16;
 
 	printf("%d\n", ft_printf("Tho oi %s cac em %d tuoi, and %x\n", s, n, x));
 	printf("%d\n", printf("Tho oi %s cac em %d tuoi, and %x\n", s, n, x));
