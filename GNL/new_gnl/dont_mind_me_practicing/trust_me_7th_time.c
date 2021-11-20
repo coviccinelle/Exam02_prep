@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_Get_Next_Line.c                                :+:      :+:    :+:   */
+/*   7th_time.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thi-phng <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/25 18:25:52 by thi-phng          #+#    #+#             */
-/*   Updated: 2021/10/25 19:43:11 by thi-phng         ###   ########.fr       */
+/*   Created: 2021/11/05 10:24:56 by thi-phng          #+#    #+#             */
+/*   Updated: 2021/11/05 11:04:23 by thi-phng         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
 int	ft_strlen(char *str)
 {
-	int	i;
+	int	i = 0;
 
-	i = 0;
 	while (str[i])
 		i++;
 	return (i);
 }
 
-char	*show_from_me(char *str, char c)
+char	*ft_strchr(char *str, char c)
 {
-	int	i;
+	int	i = 0;
 
-	i = 0;
 	if (!str[i])
 		return (NULL);
 	while (str[i])
@@ -43,10 +41,10 @@ char	*show_from_me(char *str, char c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*ret;
 	int		i = 0;
-	int		e = 0;
-	
+	int		j = 0;
+	char	*ret;
+
 	if (!s1)
 	{
 		s1 = malloc(1);
@@ -64,39 +62,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		ret[i] = s1[i];
 		i++;
 	}
-	while (s2[e])
-	{
-		ret[i] = s2[e];
-		e++;
-		i++;
-	}
-	ret[i] = '\0';
-	free(s1);
-	return (ret);
-}
-
-
-/*
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*ret;
-	int		size;
-
-	i = 0;
-	j = 0;
-	if (!s1)
-		return (s2);
-	size = ft_strlen(s1) + ft_strlen(s2) + 1;
-	ret = malloc(sizeof(char) *size);
-	if (!ret)
-		return (NULL);
-	while (s1[i])
-	{
-		ret[i] = s1[i];
-		i++;
-	}
 	while (s2[j])
 	{
 		ret[i + j] = s2[j];
@@ -106,13 +71,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (ret);
 }
-*/
 
 char	*ft_read(int fd, char *stat)
 {
 	int		ret = 1;
 	char	buf[BUFFER_SIZE + 1];
-	while (ret != 0 && !show_from_me(stat, '\n'))
+
+	while (ret != 0 && !ft_strchr(stat, '\n'))
 	{
 		ret = read(fd, buf, BUFFER_SIZE);
 		if (ret == -1)
@@ -129,7 +94,7 @@ char	*get_line(char *stat)
 	int		i = 0;
 
 	if (!stat[0])
-		return(NULL);
+		return (NULL);
 	ret = malloc(ft_strlen(stat) + 2);
 	if (!ret)
 		return (NULL);
@@ -149,16 +114,16 @@ char	*get_line(char *stat)
 
 char	*ft_stat(char *stat)
 {
-	int	i = 0;
-	int e = 0;
 	char	*ret;
+	int		i = 0;
+	int		e = 0;
 
 	while (stat[i] && stat[i] != '\n')
 		i++;
-	if (!stat[i])
+	if (!stat)
 	{
 		free(stat);
-		return(NULL);
+		return (NULL);
 	}
 	ret = malloc(ft_strlen(stat) - i + 1);
 	if (!ret)
@@ -175,14 +140,12 @@ char	*ft_stat(char *stat)
 	return (ret);
 }
 
-
-
 char	*get_next_line(int fd)
 {
 	char		*line;
 	static char	*stat;
 
-	if (BUFFER_SIZE < 1 || fd < 0)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	stat = ft_read(fd, stat);
 	if (!stat)
@@ -200,7 +163,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		printf("agrc !\n");
+		printf("ac !\n");
 		exit (0);
 	}
 	fd = open(av[1], O_RDONLY);
