@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   micro_paint.c                                      :+:      :+:    :+:   */
+/*   mini_paint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thi-phng <thi-phng@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,12 +13,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <math.h>
 
 typedef struct s_a {
 	FILE *file;
 	int	ret;
 	char **tab;
 	int	ret_fscanf;
+	float dist;
 
 	int b_width;
 	int b_height;
@@ -27,9 +29,8 @@ typedef struct s_a {
 	char type;
 	float x;
 	float y;
-	float r_width;
-	float r_height;
-	char r_char;
+	float radius;
+	char c_char;
 } t_a;
 
 void	ft_putchar(char c)
@@ -46,19 +47,25 @@ void	ft_putstr(char *str)
 		ft_putchar(str[i++]);
 }
 
+float	dist_calc(float i, float j, float x, float y)
+{
+	return ((x - j) * (x - j) + (y - i) * (y - i));
+}
+
 void	am_i_inside(t_a *a, int i, int j)
 {
-	if (j < a->x || j > a->x + a->r_width || i < a->y || i > a->y + a->r_height)
+	a->dist = sqrtf(dist_calc((float)i, (float)j, a->x, a->y));
+	if (a->dist > a->radius)
 		return ;
-	if (j - a->x < 1.00000000 || 1.00000000 > (a->x + a->r_width - j) || i - a->y < 1.00000000 || 1.00000000 > (a->y + a->r_height - i))
-		a->tab[i][j] = a->r_char;
-	if (a->type == 'R')
-		a->tab[i][j] = a->r_char;
+	if (1.00000000 > a->radius - a->dist)
+		a->tab[i][j] = a->c_char;
+	if (a->type == 'C')
+		a->tab[i][j] = a->c_char;
 }
 
 void	add_operation(t_a *a)
 {
-	if (a->r_width <= 0.00000000 || a->r_height <= 0.00000000 || (a->type != 'r' && a->type != 'R'))
+	if (a->radius <= 0.00000000 || (a->type != 'c' && a->type != 'C'))
 	{
 		a->ret = 1;
 		return ;
@@ -97,7 +104,7 @@ void	execute(t_a *a)
 			a->tab[i][j++] = a->b_char;
 		i++;
 	}
-	while((a->ret_fscanf = fscanf(a->file, "%c %f %f %f %f %c\n", &a->type, &a->x, &a->y, &a->r_width, &a->r_height, &a->r_char)) == 6 && a->ret == 0)
+	while((a->ret_fscanf = fscanf(a->file, "%c %f %f %f %c\n", &a->type, &a->x, &a->y, &a->radius, &a->c_char)) == 5 && a->ret == 0)
 	{
 		add_operation(a);
 	}
