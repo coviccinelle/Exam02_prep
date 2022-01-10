@@ -31,22 +31,4 @@ void    ft_putstr(char *str)
 
 int main(int ac, char **av)
 {
-    t_a a;
-
-    a.ret = 0;
-    if (ac != 2)
-    {
-        ft_putstr("Error: agrument\n");
-        return (1);
-    }
-    if (!(a.file = fopen(av[1], "r"))))
-    {
-        ft_putstr("Error: Operation file corrupted\n");
-        return (1);
-    }
-    execute(&a);
-    fclose(a.file);
-    if (a.ret == 1)
-        ft_putstr("Error: Operation file corrupted\n");
-    return (a.ret);
 }
